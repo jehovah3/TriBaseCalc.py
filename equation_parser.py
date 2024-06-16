@@ -1,29 +1,32 @@
 def parse_equation(equation):
+    parts = equation.split('=')
+    if len(parts) != 2:
+        return "Invalid equation format. Please use 'equation = result'."
+    
+    left, right = parts[0].strip(), parts[1].strip()
+    left_parts = left.split('+')
+    right_parts = right.split('-')
+    
     try:
-        equation = equation.replace(" ", "")
-        terms = equation.split("=")
-        if len(terms) != 2:
-            return "Invalid equation format. Use 'x+6*9-76+4=x' format."
-        left, right = terms
-        positives, negatives = left.split("+"), right.split("-")
-        positive_sum = sum(eval(term) for term in positives if term)
-        negative_sum = sum(-eval(term) for term in negatives if term)
-        return positive_sum, negative_sum
-    except Exception as e:
-        return f"Error parsing equation: {e}"
+        left_sum = sum(float(part) for part in left_parts)
+        right_diff = -sum(float(part) for part in right_parts)
+        return f"Max (left): {left_sum}, Min (right): {right_diff}"
+    except ValueError as ve:
+        return f"Invalid value in equation: {ve}"
 
-def equation_main():
+def main():
     while True:
-        try:
-            equation = input("Enter an equation (or 'exit' to quit): ")
-            if equation.lower() == 'exit':
-                break
-            result = parse_equation(equation)
-            print(f"Positive sum: {result[0]}")
-            print(f"Negative sum: {result[1]}")
-        except KeyboardInterrupt:
-            print("\nProgram terminated.")
+        equation = input("Enter an equation (e.g., 1+2-3=x): ")
+        if equation.lower() == 'exit':
+            break
+        
+        result = parse_equation(equation)
+        print(result)
+
+        prompt = input("Do you want to parse another equation? (yes/no): ")
+        if prompt.lower() != 'yes':
             break
 
 if __name__ == "__main__":
-    equation_main()
+    main()
+
