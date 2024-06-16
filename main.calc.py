@@ -1,18 +1,24 @@
-def tri_base_calculator(value):
-    if value == 0:
-        return f"0'0'0"
-    factor = value if value != 0 else 1
-    min_value = factor * 0.3
-    avg_value = factor * 0.6
-    max_value = factor * 0.9
-    return f"{min_value:.1f}'{avg_value:.1f}'{max_value:.1f}"
+def calculate_tri_values(value):
+    try:
+        value = float(value)
+        min_value = value * 0.3
+        avg_value = value * 0.6
+        max_value = value * 0.9
+        return f"{min_value}'{avg_value}'{max_value}"
+    except ValueError:
+        return "Error: Input must be a number."
 
-# Testing the function with the example given
-result = tri_base_calculator(17)
-print(result)  # Should print: 5.1'10.2'15.3
+def main():
+    while True:
+        try:
+            user_input = input("Enter a number (or 'quit' to exit): ")
+            if user_input.lower() == 'quit':
+                break
+            result = calculate_tri_values(user_input)
+            print(result)
+        except KeyboardInterrupt:
+            print("\nProgram terminated.")
+            break
 
-# Additional test with three values provided
-values = [17, 5, 99, 0]
-for value in values:
-    result = tri_base_calculator(value)
-    print(f"For {value}: {result}")
+if __name__ == "__main__":
+    main()
