@@ -1,21 +1,21 @@
-def calculate_tri_values(value):
+def tri_base_calculator(value):
     try:
         value = float(value)
         min_value = value * 0.3
         avg_value = value * 0.6
         max_value = value * 0.9
-        return f"{min_value}'{avg_value}'{max_value}"
+        return f"{min_value:.1f}'{avg_value:.1f}'{max_value:.1f}"
     except ValueError:
-        return "Error: Input must be a number."
+        return "Invalid input. Please enter a number."
 
 def main():
     while True:
         try:
-            user_input = input("Enter a number (or 'quit' to exit): ")
-            if user_input.lower() == 'quit':
+            value = input("Enter a number (or 'exit' to quit): ")
+            if value.lower() == 'exit':
                 break
-            result = calculate_tri_values(user_input)
-            print(result)
+            result = tri_base_calculator(value)
+            print(f"Result: {result}")
         except KeyboardInterrupt:
             print("\nProgram terminated.")
             break
